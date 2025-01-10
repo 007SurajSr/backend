@@ -1,16 +1,11 @@
 const express = require('express');
-const mongoose = require('mongoose');
+require('./db/config');
+const user = require('./db/User');
+
 const app = express();
-const connectDB = async () =>{
-    mongoose.connect("mongodb+srv://8700suraj:21hJIFETV1vdRFDL@testt-db.5igjwzu.mongodb.net/e-commerse");
-    const productSchema = new mongoose.Schema({});
-     const product = mongoose.model('product', productSchema);
-    const data = await product.find();
-   // const users = mongoose.model
 
-    console.warn(data);
-}
-connectDB();
-
+app.post("/register",(req, res)=>{
+    res.send("api in progress")
+})
 
 app.listen(5000);
