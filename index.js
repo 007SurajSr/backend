@@ -1,11 +1,12 @@
 const express = require('express');
 require('./db/config');
-const user = require('./db/User');
-
+const User = require('./db/User');
 const app = express();
-
-app.post("/register",(req, res)=>{
-    res.send("api in progress")
+app.use(express.json());
+app.post("/register", async (req, res)=>{
+    let user = new User(req.body);
+    let result = await user.save();
+    res.send(result)
 })
 
 app.listen(5000);
