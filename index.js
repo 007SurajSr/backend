@@ -33,4 +33,19 @@ app.post("/login", async (req, resp) => {
    resp.send(result);
  })
 
+ app.get('/products', async (req,resp) =>{
+   let product = await Product.find();
+   if(product.length>0){
+      resp.send(product)
+   }else{
+      resp.send({result:'No Product Found!!...'});
+   }
+ });
+
+ app.delete('/delete/:id', async (req, resp) =>{
+     
+    const result = await Product.deleteOne({_id:req.params.id});
+    resp.send(result);
+ });
+
 app.listen(5000);
