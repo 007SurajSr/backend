@@ -48,4 +48,12 @@ app.post("/login", async (req, resp) => {
     resp.send(result);
  });
 
+ app.put('/update/:_id', async (req,res) =>{
+   let data = await Product.updateOne(
+    req.params,
+    {$set:req.body
+    })
+   res.send(data);
+})
+
 app.listen(5000);
