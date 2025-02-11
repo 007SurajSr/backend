@@ -48,12 +48,22 @@ app.post("/login", async (req, resp) => {
     resp.send(result);
  });
 
- app.put('/update/:_id', async (req,res) =>{
-   let data = await Product.updateOne(
-    req.params,
-    {$set:req.body
+app.get('/update/:id', async (req,resp) =>{
+   let result = await Product.findOne({_id: req.params.id});
+   if (result){
+      resp.send(result)
+   } else {
+      resp.status(404).send({result:"No record Found.."});
+   }
+});
+
+ app.put('/product/:id', async (req,res) =>{
+   let result = await Product.updateOne(
+    {_id: req.params.id},
+    {
+      $set:req.body
     })
-   res.send(data);
-})
+   res.send(result);
+});
 
 app.listen(5000);
