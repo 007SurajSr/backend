@@ -77,8 +77,5 @@ app.get('/search/:key', async (req,resp)=>{
    });
    resp.send(result);
 })
-<<<<<<< HEAD
+
 app.listen(5000);
-=======
-app.listen(5000);
->>>>>>> e3ac94bbcff3970151a31e276d659bcdf1ed69bc
