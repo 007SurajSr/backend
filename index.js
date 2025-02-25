@@ -4,22 +4,38 @@ require('./db/config');
 const User = require('./db/User');
 const Product = require('./db/Product');
 const app = express();
+const Jwt = require('jsonwebtoken');
+
+const jwtKey = 'e-com';
+
 app.use(express.json());
 app.use(cors());
+
 
 app.post("/register", async (req, res)=>{
     let user = new User(req.body);
     let result = await user.save();
     result = result.toObject();
     delete result.password;
-    res.send(result)
+    Jwt.sign({result}, jwtKey, {expiresIn: "2h"}, (err,token) => {
+      if(err){
+         res.send({result: "Something went wrong, Please try again later"})
+      }
+      res.send({result, auth:token})
+   })
 })
 
 app.post("/login", async (req, resp) => {
     if(req.body.password && req.body.email){
        let user = await User.findOne(req.body).select("-password");
        if (user) {
-          resp.send(user)
+         Jwt.sign({user}, jwtKey, {expiresIn: "2h"}, (err,token) => {
+            if(err){
+               resp.send({result: "Something went wrong, Please try again later"})
+            }
+            resp.send({user, auth:token})
+         })
+         
        } else {
           resp.send({result: 'No user found'});
        }     
