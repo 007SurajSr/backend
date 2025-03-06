@@ -25,7 +25,7 @@ app.post("/register",   async (req, res)=>{
    })
 })
 
-app.post("/login", verifyToken, async (req, resp) => {
+app.post("/login",   async (req, resp) => {
     if(req.body.password && req.body.email){
        let user = await User.findOne(req.body).select("-password");
        if (user) {
@@ -41,7 +41,7 @@ app.post("/login", verifyToken, async (req, resp) => {
        }     
    } else {
     resp.send({result: 'No user found'});
-   }})
+}})
 
  app.post("/add-product", verifyToken, async (req,resp) => {
    let product = new Product(req.body);
